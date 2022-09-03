@@ -35,6 +35,25 @@ int inDir(char base[], char elemento[]){
     return 0;
 }
 
+int isFormat(char name[]){
+    int size = strlen(name);
+    int count = 0;
+
+    if(size < 4)
+        return 0;
+    
+    if(strcmp(&name[size - 4],".txt") != 0)
+        return 0;
+
+    while(count < size && name[count] != '_')
+        count++;
+    
+    if(count == size)
+        return 0;
+
+    return 1;
+}
+
 void createYearDir(char base[], char anno[]){
     int size_base = strlen(base);
     int size_anno = strlen(anno);
@@ -103,7 +122,9 @@ void moveFiles(char ruta[], char destino[]){
     char *aux_ruta;
 
     while((ent = readdir(directory))){
-        if(strcmp(ent->d_name, "..") == 0 || strcmp(ent->d_name,".") == 0)
+        if(strcmp(ent->d_name, "..") == 0 
+            || strcmp(ent->d_name,".") == 0 
+            || !isFormat(ent->d_name))
             continue;
         
         aux_size = ruta_size + strlen(ent->d_name) + 2;
@@ -120,6 +141,8 @@ void moveFiles(char ruta[], char destino[]){
 
         moveOneFile(aux_ruta, destino, ent->d_name, alumno);
 
+        printf("%s movido.\n",ent->d_name);
+
         free(aux_ruta);
     }
 
@@ -128,7 +151,7 @@ void moveFiles(char ruta[], char destino[]){
 }
 
 int main(){
-    moveFiles("alumnos","CWD");
+    moveFiles(".",".");
 
     return 0;
 }

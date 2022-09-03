@@ -72,9 +72,9 @@ void countFiles(char carpeta[],Year *y){
 //main
 int main(){
     Year y[3];
-    countFiles("CWD/2019", &y[0]);
-    countFiles("CWD/2020", &y[1]);
-    countFiles("CWD/2021", &y[2]);
+    countFiles("2019", &y[0]);
+    countFiles("2020", &y[1]);
+    countFiles("2021", &y[2]);
 
     int sum2019 = y[0].a + y[0].b + y[0].c;
     int sum2020 = y[1].a + y[1].b + y[1].c;
