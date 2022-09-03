@@ -3,7 +3,7 @@ CWD
 main1
 main2
 *.o
-*.txt
+*_*.txt
 2019
 2020
 2021
