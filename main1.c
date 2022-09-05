@@ -63,20 +63,20 @@ void createYearDir(char base[], char anno[]){
     aux_ruta[size_base] = '/';
     strcpy(&aux_ruta[size_base + 1], anno); 
 
-    mkdir(aux_ruta, S_IFDIR);
+    mkdir(aux_ruta, 0777);
 
     aux_ruta[size_base + size_anno + 1] = '/';
 
     char *temp_dir = &aux_ruta[size_base + size_anno + 2];
 
     strcpy(temp_dir,"3000+");
-    mkdir(aux_ruta, S_IFDIR);
+    mkdir(aux_ruta, 0777);
 
     strcpy(temp_dir,"6000+");
-    mkdir(aux_ruta, S_IFDIR);
+    mkdir(aux_ruta, 0777);
 
     strcpy(temp_dir,"9000+");
-    mkdir(aux_ruta, S_IFDIR);
+    mkdir(aux_ruta, 0777);
 
 
     free(aux_ruta);
