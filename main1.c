@@ -60,8 +60,8 @@ void createYearDir(char base[], char anno[]){
     char *aux_ruta = (char *) malloc(sizeof(char) * (size_base + size_anno + 8));
 
     strcpy(aux_ruta, base);
-    aux_ruta[size_base] = '/';
-    strcpy(&aux_ruta[size_base + 1], anno); 
+    strcat(aux_ruta, "/"); 
+    strcat(aux_ruta, anno); 
 
     mkdir(aux_ruta, (S_IRWXU | S_IRWXG | S_IRWXO));
 
@@ -93,10 +93,9 @@ void moveOneFile(char srcFilename[], char destino[], char filename[], Data alumn
     char *temp_dir;
 
     strcpy(aux_ruta, destino);
-    aux_ruta[size_destino] = '/';
-    
-    strcpy(&aux_ruta[size_destino + 1],alumno.anno);
-    aux_ruta[size_destino + size_anno + 1] = '/';
+    strcat(aux_ruta,"/");
+    strcat(aux_ruta,alumno.anno);
+    strcat(aux_ruta,"/");
 
     if(alumno.prioridad >= 9000)
         strcpy(&aux_ruta[size_destino + size_anno + 2], "9000+/");
@@ -104,7 +103,7 @@ void moveOneFile(char srcFilename[], char destino[], char filename[], Data alumn
         strcpy(&aux_ruta[size_destino + size_anno + 2], "6000+/");
     else strcpy(&aux_ruta[size_destino + size_anno + 2], "3000+/");
 
-    strcpy(&aux_ruta[size_destino + size_anno + 8],filename);
+    strcat(aux_ruta,filename);
 
 
     rename(srcFilename, aux_ruta);
@@ -131,8 +130,8 @@ void moveFiles(char ruta[], char destino[]){
         aux_ruta = (char *) malloc(sizeof(char) * aux_size);
         
         strcpy(aux_ruta, ruta);
-        aux_ruta[ruta_size] = '/';
-        strcpy(&aux_ruta[ruta_size + 1], ent->d_name);
+        strcat(aux_ruta,"/")
+        strcat(aux_ruta, ent->d_name);
 
 
         Data alumno = getData(aux_ruta);
@@ -151,6 +150,10 @@ void moveFiles(char ruta[], char destino[]){
 }
 
 int main(){
+    createYearDir(".", "2019");
+    createYearDir(".", "2020");
+    createYearDir(".", "2021");
+    
     moveFiles(".",".");
 
     return 0;
