@@ -130,7 +130,7 @@ void moveFiles(char ruta[], char destino[]){
         aux_ruta = (char *) malloc(sizeof(char) * aux_size);
         
         strcpy(aux_ruta, ruta);
-        strcat(aux_ruta,"/")
+        strcat(aux_ruta,"/");
         strcat(aux_ruta, ent->d_name);
 
 
