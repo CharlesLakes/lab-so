@@ -1,6 +1,6 @@
 Nombres:
     Carlos Lagos, 202073571-9, 201
-    Jose Pinto
+    Jose Pinto, 202073559-K, 201
 
 Archivos:
     main1.c -> Corresponde a la parte 1 de la tarea
