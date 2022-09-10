@@ -12,7 +12,20 @@ typedef struct year{
     int c;
 }Year;
 
-//Count Files
+/*------------------------------------------------- countFiles -----
+         |  Function countFiles
+         |
+         |  Purpose:  Entra al directorio del año y cuenta la cantidad de archivos que hay en cada subdirectorio
+         |            de prioridades. Luego, guarda la cantidad de archivos en el struct Year.
+         |
+         |  Parameters:
+         |      char carpeta[] (IN) -- directorio de un año en específico.
+         |      Year *y (IN) -- estructura que contiene los 3 años.
+         |
+         |  Returns:  Cuántos archivos hay en todos los directorios de prioridad de un año en específico.
+         |            no retorna nada.
+         |     
+         *-------------------------------------------------------------------*/
 void countFiles(char carpeta[],Year *y){
 
     DIR* directory;
@@ -68,8 +81,16 @@ void countFiles(char carpeta[],Year *y){
     closedir (directory);
 }
 
-
-//main
+/*------------------------------------------------- main -----
+         |  Function main
+         |
+         |  Purpose:  Crea el struct Year y llama a la función countFiles para cada año, luego imprime los resultados.
+         |
+         |  Parameters:
+         |
+         |  Returns:  Retorna 0 si todo sale bien.
+         |     
+         *-------------------------------------------------------------------*/
 int main(){
     Year y[3];
     countFiles("2019", &y[0]);
