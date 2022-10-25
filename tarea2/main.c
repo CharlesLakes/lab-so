@@ -5,6 +5,8 @@
 #include "vars.h"
 #include "pieza.h"
 #include "juez.h"
+#include "jugador.h"
+#include "npc.h"
 
 Pieza Piezas[SIZE];
 
@@ -46,25 +48,55 @@ void init(Pieza P[]){
 
 }
 
+void initDoublePipe(int *fd1, int *fd2){
+    pipe(fd1);
+    pipe(fd2);
+};
+
+void configDoublePipe(int pid,int *fd1, int *fd2, int *final){
+    if(pid == 0){
+        close(fd1[0]);
+        close(fd2[1]);
+
+        final[0] = fd2[0];
+        final[1] = fd1[1];
+        
+        return;
+    }
+
+    close(fd1[1]);
+    close(fd2[0]);
+
+    final[0] = fd1[0];
+    final[1] = fd2[1];
+};
+
 int main(){
     init(Piezas);
 
-    int pid,i,pipes[PLAYERS][2];
+    int pid,i,pipes[PLAYERS][2],fd1[2],fd2[2];
 
+    initDoublePipe(fd1,fd2);
     pid = fork();
+    configDoublePipe(pid,fd1,fd2,pipes[0]);
+
     if(pid == 0){
-        // Player
+        jugador(pipes[0],&Piezas[0]);
+        close(pipes[0][0]);
+        close(pipes[0][1]);
         return 0;
     }
-
     for(i = 0; i < PLAYERS - 1; i++){
+        initDoublePipe(fd1,fd2);
         pid = fork();
+        configDoublePipe(pid,fd1,fd2,pipes[i + 1]);
         if(pid == 0){
-            // Maquinas
+            npc(pipes[i + 1],&Piezas[MAZO*(i + 1)]);
             return 0;
         }
     }
 
+  
     juez(pipes);
 
     return 0;
