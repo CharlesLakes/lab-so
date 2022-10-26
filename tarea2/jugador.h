@@ -5,5 +5,6 @@
 #include "vars.h"
 
 void jugador(int pipe[2],Pieza mano[MAZO]);
+Pieza* obtenerMayor(Pieza *mano);
 
 #endif

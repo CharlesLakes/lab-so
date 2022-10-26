@@ -9,29 +9,44 @@
 
 typedef struct nodo{
 	Pieza c;
-	Pieza* p1;
-	Pieza* p2;
+	int libre
 }Nodo;
-
-Pieza temp[SIZE];
-
 
 
 void juez(int fd[PLAYERS][2]){
-	int turno;
 	MSG m;
+	Nodo l,r;
 
+
+	int jugador,piezas_jugadas = 0,saltos = 0;
 	
-	turno = 0;//rand() % PLAYERS;
+	jugador = 0;//rand() % PLAYERS;
 
 	m.status = 0;
 
 
-	write(fd[turno][1],(char *) &m, sizeof(MSG));
+	write(fd[jugador][1],(char *) &m, sizeof(MSG));
 
-	read(fd[turno][0],(char *) &m, sizeof(MSG));
+	read(fd[jugador][0],(char *) &m, sizeof(MSG));
 
-	printf("%d/%d\n",m.p.p1,m.p.p2);
+	l.c = r.c = m;
+	l.libre = l.c.p1;
+	r.libre = r.c.p2;
 	
+	piezas_jugadas++;
+
+	jugador = (jugador + 1) % PLAYERS;
+
+	for(jugador = (jugador + 1) % PLAYERS;
+		saltos < PLAYERS && m.cantidad_piezas == 0;
+		jugador = (jugador + 1) % PLAYERS){
+
+		write(fd[jugador][1],(char *) &m, sizeof(MSG));
+		read(fd[jugador][0],(char *) &m, sizeof(MSG));
+
+		if()
+
+	}
+
 
 }
