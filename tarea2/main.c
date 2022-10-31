@@ -2,6 +2,7 @@
 #include <time.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <fcntl.h>
 #include "vars.h"
 #include "pieza.h"
 #include "juez.h"
@@ -26,7 +27,7 @@ void init(Pieza P[]){
         count += i + 1;
     }
 
-    
+
     // Se revuelve el mazo
     count = 0;
     for(i = 0; i < SIZE; i++){
@@ -50,7 +51,9 @@ void init(Pieza P[]){
 
 void initDoublePipe(int *fd1, int *fd2){
     pipe(fd1);
+    fcntl(fd1[0],F_SETFL,O_NONBLOCK);
     pipe(fd2);
+    fcntl(fd2[0],F_SETFL,O_NONBLOCK);
 };
 
 void configDoublePipe(int pid,int *fd1, int *fd2, int *final){
@@ -60,7 +63,7 @@ void configDoublePipe(int pid,int *fd1, int *fd2, int *final){
 
         final[0] = fd2[0];
         final[1] = fd1[1];
-        
+
         return;
     }
 
@@ -96,7 +99,7 @@ int main(){
         }
     }
 
-  
+
     juez(pipes);
 
     return 0;
