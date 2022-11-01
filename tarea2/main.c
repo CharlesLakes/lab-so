@@ -12,6 +12,16 @@
 
 Pieza Piezas[SIZE];
 
+/*------------------------------------------------- init -----
+         |  Function init
+         |
+         |  Purpose:  Esta funcion se encarga de generar generar el mazo de piezas y luego
+         |  mezclarlo de forma aleatoria.
+         |  Parameters:
+         |      Pieza P[]: arreglo de piezas.
+         |
+         |  Returns:  No retorna nada, ya que es void
+         *-------------------------------------------------------------------*/
 void init(Pieza P[]){
     // Definiciones
     int i,j,temp,count = 0;
@@ -50,11 +60,35 @@ void init(Pieza P[]){
 
 }
 
+/*------------------------------------------------- initDoublePipe -----
+         |  Function initDoublePipe
+         |
+         |  Purpose:  Esta funcion se encarga de inicializar los pipes.
+         |  Parameters:
+         |      int *fd1 : pipe 1
+         |      int *fd2 : pipe 2
+         |
+         |  Returns:  No retorna nada, ya que es void
+         *-------------------------------------------------------------------*/
 void initDoublePipe(int *fd1, int *fd2){
     pipe(fd1);
     pipe(fd2);
 };
 
+/*------------------------------------------------- configDoublePipe -----
+         |  Function configDoublePipe
+         |
+         |  Purpose:  Esta funcion se encarga de configurar los pipes para que en conjunto
+         |  sean bidireccionales.
+
+         |  Parameters:
+         |      int pid : pid del proceso
+         |      int *fd1 : pipe 1
+         |      int *fd2 : pipe 2
+         |      int *final : pipe final
+         |
+         |  Returns:  No retorna nada, ya que es void
+         *-------------------------------------------------------------------*/
 void configDoublePipe(int pid,int *fd1, int *fd2, int *final){
     if(pid == 0){
         close(fd1[0]);
@@ -73,6 +107,16 @@ void configDoublePipe(int pid,int *fd1, int *fd2, int *final){
     final[1] = fd2[1];
 };
 
+/*------------------------------------------------- main -----
+         |  Function main
+         |
+         |  Purpose:  Esta funcion se encarga de inicializar los pipes, crear los procesos
+         |  y luego de que los procesos terminen, se encarga de cerrar los pipes.
+         |  Parameters:
+         |      No recibe parametros
+         |
+         |  Returns:  Retorna 0 si todo sale bien.
+         *-------------------------------------------------------------------*/
 int main(){
     init(Piezas);
 
