@@ -12,6 +12,6 @@ compile: main.o juez.o jugador.o npc.o msg.o
 	gcc main.o juez.o jugador.o npc.o msg.o -o main
 run:
 	./main
-CANDR: compile run
+RunAndCompile: compile run
 delete:
 	rm *.o main

@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <fcntl.h>
+#include <sys/wait.h>
 #include "vars.h"
 #include "pieza.h"
 #include "juez.h"
@@ -75,13 +76,13 @@ void configDoublePipe(int pid,int *fd1, int *fd2, int *final){
 int main(){
     init(Piezas);
 
-    int pids[PLAYERS],i,pipes[PLAYERS][2],fd1[2],fd2[2];
+    int pid,i,pipes[PLAYERS][2],fd1[2],fd2[2];
 
     initDoublePipe(fd1,fd2);
-    pids[0] = fork();
-    configDoublePipe(pids[0],fd1,fd2,pipes[0]);
+    pid = fork();
+    configDoublePipe(pid,fd1,fd2,pipes[0]);
 
-    if(pids[0] == 0){
+    if(pid == 0){
         jugador(pipes[0],&Piezas[0]);
         close(pipes[0][0]);
         close(pipes[0][1]);
@@ -105,6 +106,9 @@ int main(){
       close(pipes[i][0]);
       close(pipes[i][1]);
     }
+    wait(NULL);
+    wait(NULL);
+    wait(NULL);
     wait(NULL);
 
     return 0;
