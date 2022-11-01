@@ -51,9 +51,7 @@ void init(Pieza P[]){
 
 void initDoublePipe(int *fd1, int *fd2){
     pipe(fd1);
-    fcntl(fd1[0],F_SETFL,O_NONBLOCK);
     pipe(fd2);
-    fcntl(fd2[0],F_SETFL,O_NONBLOCK);
 };
 
 void configDoublePipe(int pid,int *fd1, int *fd2, int *final){

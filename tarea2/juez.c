@@ -47,9 +47,14 @@ void validacionAsignacion(MSG *m,Nodo *l,Nodo *r){
 int sum(Pieza mano[MAZO]){
 	int contador = 0;
 	for(int i = 0; i < MAZO; i++)
-		if(!mano[i].asignada)
+		if(!mano[i].asignada){
+			printf(" %d/%d",mano[i].p1,mano[i].p2);
 			contador += mano[i].p1 + mano[i].p2;
+		};
 
+	if(!contador)
+	 printf(" Vacio y suma 0.");
+	else printf(" y suma %d.",contador);
 	return contador;
 }
 
@@ -60,7 +65,7 @@ void juez(int fd[PLAYERS][2]){
 
 	int jugador,piezas_jugadas = 0,saltos = 0;
 
-	jugador = 0;//rand() % PLAYERS;
+	jugador = rand() % PLAYERS;
 
 	m.status = 0;
 	m.pasa = 0;
@@ -76,11 +81,12 @@ void juez(int fd[PLAYERS][2]){
 	m.status = 1;
 
 	piezas_jugadas++;
+	printf("Inicia el jugador %d con la pieza %d/%d.\n",jugador + 1,m.p.p1,m.p.p2);
 
-
-	for(jugador = 0;//(jugador + 1) % PLAYERS;
+	int contador = 0;
+	for(jugador = (jugador + 1) % PLAYERS;
 			saltos < PLAYERS && m.cantidad_piezas > 0;
-			jugador = 0/*(jugador + 1) % PLAYERS*/){
+			jugador = (jugador + 1) % PLAYERS){
 
 		printf("Libres: %d -- %d\n", l.libre,r.libre);
 
@@ -94,7 +100,6 @@ void juez(int fd[PLAYERS][2]){
 			validacionAsignacion(&m,&l,&r);
 			if(!m.piezaValida)
 				printf("La pieza es invalida.\nElige otra o pasa.\n");
-			printf("%d\n",m.pasa);
 		}while(!m.piezaValida && !m.pasa);
 		m.piezaValida = 1;
 		write(fd[jugador][1],(char *) &m, sizeof(MSG));
@@ -102,15 +107,25 @@ void juez(int fd[PLAYERS][2]){
 			printf("El jugador %d paso.\n",jugador + 1);
 			m.pasa = 0;
 			saltos++;
+		}else printf("El jugador %d jugo %d/%d\n",jugador + 1,m.p.p1,m.p.p2);
+
+		contador++;
+		if(contador == PLAYERS && saltos != PLAYERS){
+			saltos = 0;
+			contador = 0;
 		}
+
 	}
 
 	int player,menor = 1000000;
 	m.status = 2;
+	printf("Fin de bucle\n");
 	for(int i = 0; i < PLAYERS; i++){
 		write(fd[i][1],(char *) &m, sizeof(MSG));
 		waitRead(fd[i][0],(char *) &m, sizeof(MSG));
+		printf("La mano del jugador %d es",i + 1);
 		int temp = sum(m.mano);
+		printf("\n");
 		if(temp < menor){
 			menor = temp;
 			player = i;
