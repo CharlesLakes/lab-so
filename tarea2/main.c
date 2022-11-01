@@ -75,13 +75,13 @@ void configDoublePipe(int pid,int *fd1, int *fd2, int *final){
 int main(){
     init(Piezas);
 
-    int pid,i,pipes[PLAYERS][2],fd1[2],fd2[2];
+    int pids[PLAYERS],i,pipes[PLAYERS][2],fd1[2],fd2[2];
 
     initDoublePipe(fd1,fd2);
-    pid = fork();
-    configDoublePipe(pid,fd1,fd2,pipes[0]);
+    pids[0] = fork();
+    configDoublePipe(pids[0],fd1,fd2,pipes[0]);
 
-    if(pid == 0){
+    if(pids[0] == 0){
         jugador(pipes[0],&Piezas[0]);
         close(pipes[0][0]);
         close(pipes[0][1]);
@@ -93,12 +93,19 @@ int main(){
         configDoublePipe(pid,fd1,fd2,pipes[i + 1]);
         if(pid == 0){
             npc(pipes[i + 1],&Piezas[MAZO*(i + 1)]);
+            close(pipes[i + 1][0]);
+            close(pipes[i + 1][1]);
             return 0;
         }
     }
 
 
     juez(pipes);
+    for(int i = 0; i < PLAYERS; i++){
+      close(pipes[i][0]);
+      close(pipes[i][1]);
+    }
+    wait(NULL);
 
     return 0;
 }
