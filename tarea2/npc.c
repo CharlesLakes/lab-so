@@ -4,6 +4,17 @@
 #include "jugador.h"
 #include "msg.h"
 
+/*------------------------------------------------- simularOpcion -----
+         |  Function simularOpcion
+         |
+         |  Purpose:  Esta funcion se encarga de simular la opcion del NPC.
+         |
+         |  Parameters:
+		 |		MSG m : mensaje entre procesos
+         |      Pieza mano[MAZO]: la mano del jugador.
+         |
+         |  Returns:  int : retorna la opcion que el NPC eligio o -1.
+         *-------------------------------------------------------------------*/
 int simularOpcion(MSG m,Pieza mano[MAZO]){
 	for(int i = 0; i < MAZO; i++)
 		if(!mano[i].asignada &&
@@ -13,6 +24,20 @@ int simularOpcion(MSG m,Pieza mano[MAZO]){
 	return -1;
 };
 
+/*------------------------------------------------- npc -----
+         |  Function npc
+         |
+         |  Purpose:  Esta funcion se encarga de inicializar la mano del npc,
+		 |  colocar la pieza mayor en la mesa si es que le toca iniciar. Luego simula
+		 |  la opcion que el NPC eligio y finalmente cambia el estado de las piezas y envia
+		 |  la info al juez.
+		 |
+         |  Parameters:
+         |      fd[2] : arreglo de pipes
+		 |      Pieza mano[MAZO]: la mano del NPC
+         |
+         |  Returns:  No retorna nada, ya que es void
+         *-------------------------------------------------------------------*/
 void npc(int fd[2],Pieza mano[MAZO]){
 	MSG m;
 	int cantidad_piezas = MAZO;

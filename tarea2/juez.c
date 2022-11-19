@@ -12,6 +12,21 @@ typedef struct nodo{
 	int libre;
 }Nodo;
 
+/*------------------------------------------------- alidacionAsignacion -----
+         |  Function alidacionAsignacion
+         |
+         |  Purpose:  Esta funcion se encarga de validar si es que algun lado
+		 |  de la pieza sea igual al lado libre de las piezas que estan en la
+		 |  mesa. Si es asi, se asigna la pieza a la mesa y se cambia el estado
+		 |  de la pieza a 1, indicando que ya no esta libre.
+         |
+         |  Parameters:
+         |      MSG *m : mensaje entre procesos
+		 |      Nodo *l: pieza de la izquierda
+		 |		Modo *r: pieza de la derecha
+         |
+         |  Returns:  No retorna nada, ya que es void
+         *-------------------------------------------------------------------*/
 void validacionAsignacion(MSG *m,Nodo *l,Nodo *r){
 	if(m->pasa)
 		return;
@@ -44,6 +59,18 @@ void validacionAsignacion(MSG *m,Nodo *l,Nodo *r){
 	m->piezaValida = 0;
 };
 
+
+/*------------------------------------------------- sum -----
+         |  Function sum
+         |
+         |  Purpose:  Esta funcion se encarga de sumar los puntos de los 2 lados de
+		 |  las piezas de una mano.
+         |
+         |  Parameters:
+         |      Pieza mano[MAZO] : arreglo (mano) de piezas
+         |
+         |  Returns:  int: retorna la suma de los lados de las piezas de la mano
+         *-------------------------------------------------------------------*/
 int sum(Pieza mano[MAZO]){
 	int contador = 0;
 	for(int i = 0; i < MAZO; i++)
@@ -58,6 +85,18 @@ int sum(Pieza mano[MAZO]){
 	return contador;
 }
 
+/*------------------------------------------------- juez -----
+         |  Function juez
+         |
+         |  Purpose:  Esta funcion se encarga de recibir la informacion de los mazos, elige 
+		 |  que jugador empieza, muestra la informacion de la mesa y llama a la funcion validacionAsignacion.
+		 |  Tambien muestra si es que un jugador jugó alguna pieza o pasó. Finalmente llama a la funcion sum
+		 |  para mostrar la suma de los puntos de cada jugador y ver cual es el menor.
+         |  Parameters:
+         |      fd[PLAYERS][2] : arreglo de pipes
+         |
+         |  Returns:  No retorna nada, ya que es void
+         *-------------------------------------------------------------------*/
 void juez(int fd[PLAYERS][2]){
 	MSG m;
 	Nodo l,r;
@@ -107,7 +146,7 @@ void juez(int fd[PLAYERS][2]){
 			printf("El jugador %d paso.\n",jugador + 1);
 			m.pasa = 0;
 			saltos++;
-		}else printf("El jugador %d jugo %d/%d\n",jugador + 1,m.p.p1,m.p.p2);
+		}else printf("El jugador %d jugó %d/%d\n",jugador + 1,m.p.p1,m.p.p2);
 
 		contador++;
 		if(contador == PLAYERS && saltos != PLAYERS){
