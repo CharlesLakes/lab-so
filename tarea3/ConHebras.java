@@ -104,7 +104,8 @@ class Multithreading extends Thread{
 
     /* 
      * Funcion: public void run
-     * Descripcion: Corresponde a lo que se ejecutara en cada hilo al llamar el metodo start
+     * Descripcion: Corresponde a lo que se ejecutara en cada hilo al llamar el metodo start. 
+     *              e divide la matriz en 4 y se llama recusivamente para hacer lo mismo hasta cuando sea de mxm y luego encuentra la embarcacion.
      * Parametros: 
      *      sin parametors
     */
