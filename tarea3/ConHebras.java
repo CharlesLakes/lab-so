@@ -1,6 +1,5 @@
 import java.util.Scanner;
 import java.lang.Thread;
-import java.util.concurrent.TimeUnit;
 import java.io.File;
 
 public class ConHebras{
@@ -22,6 +21,8 @@ public class ConHebras{
 
             sc.nextLine();
             String matrizSTR = sc.nextLine();
+            sc.close();
+
             // Procesamineto de matriz
             for(int i = 0,level = -1,x = 0; i < matrizSTR.length(); i++){
                 char temp = matrizSTR.charAt(i);
@@ -34,8 +35,8 @@ public class ConHebras{
             }
             Multithreading t = new Multithreading(matriz, 0, 0, n - 1, n - 1,m);
             t.start();
-
-            sc.close();
+            try{t.join();}catch(Exception e){System.out.println("Error.");}
+            
             
         }catch(Exception e){
             System.out.println("Error");
@@ -81,6 +82,11 @@ class Multithreading extends Thread{
         t2.start();
         t3.start();
         t4.start();
-
+        try{
+            t1.join();
+            t2.join();
+            t3.join();
+            t4.join();
+        }catch(Exception e){System.out.println("Error.");}
     }
 }
