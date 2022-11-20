@@ -9,4 +9,5 @@ main2
 2021
 tarea2/main
 tarea3/informe-nautico.txt
+tarea3/*.py
 *.class
