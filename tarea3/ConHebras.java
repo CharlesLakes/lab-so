@@ -33,11 +33,34 @@ public class ConHebras{
                 else if(temp == '1' || temp == '0')
                         matriz[level][x++] = temp == '1'? 1 : 0;
             }
-            Multithreading t = new Multithreading(matriz, 0, 0, n - 1, n - 1,m);
-            t.start();
-            try{t.join();}catch(Exception e){System.out.println("Error.");}
-            
-            
+
+            // Creación 4 hebras
+            int x = n - 1, y = n - 1,i = 0,j = 0;
+            if(x + 1 - i <= m){
+                int saveJ = -1;
+                for(int jj = j ; jj <= y; jj++)
+                    if(matriz[jj][i] == 1)
+                        saveJ = jj;
+                if(saveJ >= 0)
+                    System.out.printf("fila %d, columna [%d,%d]\n",saveJ + 1,i + 1,i + m);
+            }else{
+                int midX = (i + x)/2;
+                int midY = (j + y)/2;
+                Multithreading t1 = new Multithreading(matriz, i, j, midX, midY, m);
+                Multithreading t2 = new Multithreading(matriz, midX + 1, j, x, midY, m);
+                Multithreading t3 = new Multithreading(matriz, i, midY + 1, midX, y, m);
+                Multithreading t4 = new Multithreading(matriz, midX + 1, midY + 1, x, y, m);
+                t1.start();
+                t2.start();
+                t3.start();
+                t4.start();
+                try{
+                    t1.join();
+                    t2.join();
+                    t3.join();
+                    t4.join();
+                }catch(Exception e){System.out.println("Error.");}
+            }
         }catch(Exception e){
             System.out.println("Error");
         }
@@ -68,7 +91,7 @@ class Multithreading extends Thread{
             for(int jj = j ; jj <= y; jj++)
                 if(matriz[jj][i] == 1)
                     saveJ = jj;
-            if(saveJ > 0)
+            if(saveJ >= 0)
                 System.out.printf("fila %d, columna [%d,%d]\n",saveJ + 1,i + 1,i + m);
             return;
         }
