@@ -11,14 +11,17 @@ Comentarios:
     * Se toma el archivo "informe-nautico.txt" como entrada de datos, no por consola.
 
 Makefile:
-    Para compilar y ejecutar el programa usa:
-        make RunAndCompile
-    Para solo compilar usar:
-        make compile
-    Para solo ejecutar usar:
-        make run
-    En caso de no poder ejecutar con estos comandos usar:
-        Para compilar:
-            gcc main.c juez.c jugador.c npc.c msg.o -o main
-        Para ejecutar:
-            ./main
+    Con Hebras:
+        Para compilar y ejecutar usar:
+            make startWith
+        Para solo compilar usar:
+            make compileWith
+        Para solo ejecutar usar:
+            make runWith
+    Sin Hebras:
+        Para compilar y ejecutar usar:
+            make startWithout
+        Para solo compilar usar:
+            make compileWithout
+        Para solo ejecutar usar:
+            make runWithout

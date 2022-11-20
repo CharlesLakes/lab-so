@@ -3,6 +3,12 @@ import java.io.File;
 
 public class SinHebras{
 
+    /* 
+     * Funcion: public static void main
+     * Descripcion: La funcion principal de el porgrama el cual encuentra la embarcación de tamaño m en nu matriz de nxn
+     * Parametros: 
+     *      String[] args -> variable que guarda los argumentos al ejecutar un porgrama, en este caso no se usara.
+    */
     public static void main(String[] args) {
         // Procesamiento de entradas
         long startTime = System.nanoTime();

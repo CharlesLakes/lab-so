@@ -4,8 +4,14 @@ import java.io.File;
 
 public class ConHebras{
 
-
-
+    
+    
+    /* 
+     * Funcion: public static void main
+     * Descripcion: La funcion principal de el porgrama el cual encuentra la embarcación de tamaño m en nu matriz de nxn
+     * Parametros: 
+     *      String[] args -> variable que guarda los argumentos al ejecutar un porgrama, en este caso no se usara.
+    */
     public static void main(String[] args) {
         // Procesamiento de entradas
         long startTime = System.nanoTime();
@@ -75,6 +81,17 @@ class Multithreading extends Thread{
     private int matriz[][];
     private int i,j,x,y,m;
     
+    /* 
+     * Funcion: Multithreading
+     * Descripcion: Corresponde al constructor de la clase Multithreading la cual es extendida de Thread. Tambien guarda los valores correspondeintes en la clase.
+     * Parametros: 
+     *      int ma[][] -> Corresponse a la matriz
+     *      int i -> Corresponse a donde inicia en el eje horizontal la subseccion
+     *      int j -> Corresponde a donde inicia en el eje vertical la subseccion
+     *      int x -> Corresponde a donde finaliza en el eje horizontal la subseccion
+     *      int y -> Corresponde a donde fnializa en el eje vertical la subseccion
+     *      int m -> Corresponde al largo de la embarcacion
+    */
     public Multithreading(int ma[][],int i, int j, int x, int y, int m){
         super();
         this.matriz = ma;
@@ -85,6 +102,12 @@ class Multithreading extends Thread{
         this.m = m;
     }
 
+    /* 
+     * Funcion: public void run
+     * Descripcion: Corresponde a lo que se ejecutara en cada hilo al llamar el metodo start
+     * Parametros: 
+     *      sin parametors
+    */
     public void run(){
         if(x + 1 - i <= m){
             int saveJ = -1;
