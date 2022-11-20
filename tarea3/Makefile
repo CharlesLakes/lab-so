@@ -1,8 +1,14 @@
-compileWithThread:
+compileWith:
 	javac ConHebras.java
-runWithThread:
+runWith:
 	java ConHebras
-compileWithoutThread:
+compileWithout:
 	javac SinHebras.java
-runWithoutThread:
+runWithout:
 	java SinHebras
+
+startWith: compileWith runWith
+startWithout: compileWithout runWithout
+
+	
+
