@@ -11,3 +11,4 @@ tarea2/main
 tarea3/informe-nautico.txt
 tarea3/*.py
 *.class
+__pycache__
