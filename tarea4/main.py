@@ -20,7 +20,7 @@ def make_files():
 def make_threads():
     threads = []
     # Create 120 new threads
-    for i in range(32):
+    for i in range(6):
         thread = Jugador(i+1, "Jugador"+str(i+1), 1)
         thread.start()
         threads.append(thread)

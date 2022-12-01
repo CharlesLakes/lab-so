@@ -34,8 +34,12 @@ class Partida:
             self.en_partida[pos][1].acquire()
         print(jugador,"Saliendo")
 
-    def entrar_en_cola(self,jugador):
+    def entrar_en_cola(self,jugador,queue):
+
         #print(jugador,"Esperando que exista espacio en cola")
+        self.queueSemaphore.acquire()
+        if len(queue) > 0:
+            queue[0][1].release()
         self.threadLock.acquire()
         semaphore = threading.Semaphore(0)
         self.cola.append((jugador,semaphore))
@@ -50,6 +54,7 @@ class Partida:
         if len(self.cola) > 0:
             self.cola[0][1].release()
         self.threadLock.release()
+        self.queueSemaphore.release()
         print(jugador,"Esperando que se inicie la partida")
         self.in_game(jugador,pos)
 

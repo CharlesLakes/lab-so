@@ -1,4 +1,5 @@
 import threading
+from partida import *
 
 class Lobby:
     def __init__(self):
@@ -11,15 +12,37 @@ class Lobby:
     
     def entrar(self,jugador,game):
         self.threadLock.acquire()
+        semaphore = threading.Semaphore(0)
         if game == 1:
-            self.pre_estandar.append(jugador)
+            partida = Estandar
+            queue = self.pre_estandar
+            self.pre_estandar.append((jugador,semaphore))
         elif game == 2:
-            self.pre_versus.append(jugador)
+            partida = Versus
+            queue = self.pre_versus
+            self.pre_versus.append((jugador,semaphore))
         elif game == 3:
-            self.pre_rapida.append(jugador)
+            partida = Rapida
+            queue = self.pre_rapida
+            self.pre_rapida.append((jugador,semaphore))
         elif game == 4:
-            self.pre_navidad.append(jugador)
+            partida = Navidad
+            queue = self.pre_navidad
+            self.pre_navidad.append((jugador,semaphore))
+        print("Entro al lobby")
+        while queue[0][0] != jugador and len(partida.cola) >= partida.capacidad:
+            self.threadLock.release()
+            semaphore.acquire()
+            self.threadLock.acquire()
+        queue.pop(0)
         self.threadLock.release()
 
+        partida.entrar_en_cola(jugador,queue)
+
+
+CurrentLobby = Lobby()
+        
+        
+        
 
 
