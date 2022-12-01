@@ -1,9 +1,8 @@
 import threading
 import random
 from datetime import datetime
-from partida import Estandar
+from partida import Estandar, Versus
 
-test = Estandar()
 
 class Jugador(threading.Thread):
     def __init__(self, threadID, name, counter):
@@ -24,6 +23,6 @@ class Jugador(threading.Thread):
         elif self.game == 4:
             game="Partida Especial Navidad"
         #print(self.name+", "+ str(self.start_time.time())+", "+(game))
-        test.entrar_en_cola(self.threadID)
+        Versus.entrar_en_cola(self.threadID)
 
         
