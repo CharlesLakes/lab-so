@@ -23,6 +23,7 @@ class Jugador(threading.Thread):
             game="Partida Rápida"
         elif self.game == 4:
             game="Partida Especial Navidad"
+        #self.game = 1
         print(self.name+", "+ str(self.start_time.time())+", "+(game))
         CurrentLobby.entrar(self.threadID,self.game)
 

@@ -1,9 +1,10 @@
 import threading
 from partida import *
+from logs import *
 
 class Lobby:
     def __init__(self):
-        self.jugadores = []
+        #self.jugadores = []
         self.pre_estandar = []
         self.pre_versus = []
         self.pre_rapida = []
@@ -29,15 +30,15 @@ class Lobby:
             partida = Navidad
             queue = self.pre_navidad
             self.pre_navidad.append((jugador,semaphore))
+        entrada = lobby_log.obtener_tiempo()
         print("Entro al lobby")
         while queue[0][0] != jugador and len(partida.cola) >= partida.capacidad:
             self.threadLock.release()
             semaphore.acquire()
             self.threadLock.acquire()
-        queue.pop(0)
         self.threadLock.release()
 
-        partida.entrar_en_cola(jugador,queue)
+        partida.entrar_en_cola(jugador,queue,entrada)
 
 
 CurrentLobby = Lobby()

@@ -12,3 +12,8 @@ tarea3/informe-nautico.txt
 tarea3/*.py
 *.class
 __pycache__
+tarea4/Lobby.txt
+tarea4/PartidaEstandar.txt
+tarea4/PartidaRapida.txt
+tarea4/PartidaEspecialNavidad.txt
+tarea4/PartidaVersus.txt
